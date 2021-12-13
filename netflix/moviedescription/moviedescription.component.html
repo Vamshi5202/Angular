@@ -1,0 +1,43 @@
+<!-- <ion-header>
+  <ion-toolbar>
+ 
+  
+</ion-toolbar>
+</ion-header> -->
+<ion-content class='main-container' overflow-scroll="false">
+  <ion-grid style="background-color: black;">
+    <ion-row>
+      <ion-col>
+        <ion-card class="ion-hide-scrollbar">
+          <ion-card-header>
+            
+            <h1>
+              <span>{{movieInfo.title?movieInfo.title:movieInfo.name}}</span>
+              <ion-button fill='clear' (click)='closeModal()'>
+                <ion-icon name='close' slot="icon-only"></ion-icon>
+              </ion-button>
+            </h1>
+            <p>Genere:{{movieInfo.adult?'18+':'Children'}}</p>
+          </ion-card-header>
+          <ion-card-content>
+           
+            <ion-img class="movie-images" src='https://image.tmdb.org/t/p/w500{{movieInfo.backdrop_path}}'></ion-img>
+            <ion-label ><span style="text-decoration: underline;font-size: larger;">Description</span>:{{movieInfo.overview}}</ion-label>
+         <div class='hr'></div>
+            <div style="display: flex;justify-content: space-around;align-items: center;flex-wrap: wrap;">
+              <ion-label class="movie-score">
+                <ion-icon name="star-outline"></ion-icon><span>Popularity:</span><span>{{movieInfo.popularity}}</span>
+              </ion-label>
+              <ion-label class="movie-score">
+                <ion-icon name="flag-outline"></ion-icon><span>Votes:</span><span>{{movieInfo.vote_count}}</span>
+              </ion-label>
+              <ion-label class="movie-score">
+                <ion-icon name="bookmark-outline"></ion-icon><span>Average:</span><span>{{movieInfo.vote_average}}/10</span>
+              </ion-label>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

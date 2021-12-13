@@ -1,0 +1,22 @@
+<div class="col-md-5 mx-auto">
+  <h2>{{taxtitle}}</h2>
+  <table class="table table-primary table-striped table-hover">
+    <tr>
+      <td>Employee Name</td>
+      <td><input type="text" [(ngModel)]="ename"/></td>
+    </tr>
+    <tr>
+      <td>Annual Income</td>
+      <td><input type="number" [(ngModel)]="income"/></td>
+    </tr>
+    <tr>
+      <td>Tax</td>
+      <td>{{tax | number:'.2-2'}}</td>
+    </tr>
+    <tr>
+       <td colspan="2" align="center">
+        <input type="button" (click)="findTax()" value="Calc Tax"/>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,42 @@
+.movie-images{
+    // width: 250px;
+   
+  //   height: 250px;
+  padding-bottom: 10px;
+}
+h1{
+    display: flex;
+    justify-content: space-between;
+}
+.hr {
+    border-bottom: 1px solid #ccc;
+    margin: 10px 0;
+    width: 100%;
+  }
+  .movie-score{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  .main-container{
+      --ion-background-color:black;
+      // border: 1px solid white;
+  }
+  span,p{
+      color: white;
+  }
+  ion-icon{
+      color: white;
+  }
+
+  ion-content {
+    --offset-bottom: auto!important;
+    --overflow: hidden;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  ion-content.main-container {
+    background: black;
+}

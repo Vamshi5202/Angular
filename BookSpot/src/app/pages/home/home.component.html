@@ -1,0 +1,61 @@
+<div class="w-full flex flex-row items-center p-2 justify-between bg-white shadow-xs bg-yellow-300 ">
+    <div class="text-red-800 ml-8 text-lg text-white hidden md:flex">
+        <a routerLink=""> BookSpot</a>
+    </div>
+    <div class="p">
+        <div class="bg-white flex items-center rounded-full shadow-xl">
+            <input [(ngModel)]="query"
+                class="rounded-l-full w-full py- px-6 text-gray-700 leading-tight focus:outline-none" id="search"
+                type="text" placeholder="Search">
+
+            <div class="p-1">
+                <button [routerLink]="['search', query]" (click)="getAllBooksBySearch(query,  40, 1)"
+                    class="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-12 h-12 flex items-center justify-center">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-row-reverse text-white mr-4 ml-4 md:hidden">
+        <button>
+            <svg width="20" height="20" fill="currentColor" class="h-8 w-8" viewBox="0 0 1792 1792"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z">
+                </path>
+            </svg>
+        </button>
+    </div>
+
+    <div class="flex items-center mr-8 hidden md:flex">
+        <div>
+            <i routerLink="favourites" class="bi bi-heart-fill text-red-600 mr-4"></i>
+        </div>
+        <div class="flex-shrink-0">
+            <a href="#" class="block relative">
+                <img alt="profil" src="https://www.tailwind-kit.com/images/person/1.jpg"
+                    class="mx-auto object-cover rounded-full h-8 w-8 mr-2" />
+            </a>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="grid grid-flow-col grid-cols-5  gap-4">
+    <div class="cols-span-2 hidden md:flex ">
+        <app-left-side></app-left-side>
+    </div>
+
+    <div class="col-span-3">
+
+        <!-- <div>
+            <app-right-side [booksItem]="books"></app-right-side>
+        </div> -->
+        <!-- <div *ngIf="!visible">
+            <app-search-book [searchBooks1]="searchBooks"></app-search-book>
+        </div> -->
+        <router-outlet></router-outlet>
+    </div>
+</div>

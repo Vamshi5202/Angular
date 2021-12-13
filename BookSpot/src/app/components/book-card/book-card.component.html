@@ -1,0 +1,16 @@
+<div class="w-80 rounded overflow-hidden shadow-lg m-5">
+  <a [routerLink]="['singleBook',oneBook.id]"><img class=" md:h-72 m-auto"
+      src={{oneBook.volumeInfo.imageLinks.smallThumbnail}} alt="Sunset in the mountains"></a>
+  <div class="md:px-6 md:py-4">
+    <div class="font-bold text-md mb-2 ">{{oneBook.volumeInfo.title.substring(0,30)}}...</div>
+
+    <div class=" text-sm mb-2">{{oneBook.volumeInfo.authors}}</div>
+
+  </div>
+  <div class="px-6   pb-2 flex justify-around">
+    <span
+      class="inline-block bg-gray-200 rounded-full px-3   text-sm font-semibold text-gray-700 mr-2 mb-2">#{{oneBook.volumeInfo.categories}}</span>
+    <!-- <i class="bi bi-heart "></i> -->
+    <i (click)="addingFav(oneBook)" class="text-red-600 bi bi-heart-fill "></i>
+  </div>
+</div>

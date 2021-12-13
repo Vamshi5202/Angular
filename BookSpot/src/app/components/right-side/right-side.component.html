@@ -1,0 +1,27 @@
+
+
+<div *ngFor="let x of booksItem">
+
+<hr>
+    <div>
+        <a [routerLink]="['search',x.items[0].volumeInfo.categories[0]]" ><h2 class="text-xl text-gray-600 mt-5">{{x.items[0].volumeInfo.categories}}</h2>
+        </a>
+
+    </div>
+
+    <div>
+        <div class="grid   md:grid-flow-col gap-2" (onLoad)="yourMethod(x)">
+          
+            <div *ngFor="let m2 of x.items">
+                <app-book-card [oneBook]="m2">
+
+                </app-book-card>
+            </div>
+
+      
+
+        </div>
+    </div>
+
+
+</div>

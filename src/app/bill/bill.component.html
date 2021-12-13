@@ -1,0 +1,30 @@
+<div class="col-md-5 mx-auto">
+  <h2>{{billtitle}}</h2>
+  <table class="table table-primary table-striped table-hover">
+    <tr>
+      <td>Total Bill Cost</td>
+      <td><input type="text" [(ngModel)]="billCost"/></td>
+    </tr>
+    <tr>
+      <td>Tip Percentage</td>
+      <td><input type="number" [(ngModel)]="tipPercent"/></td>
+    </tr>
+    <tr>
+      <td>No Of Person</td>
+      <td><input type="number" [(ngModel)]="noOfPeople"/></td>
+    </tr>
+    <tr>
+      <td>Tip Per Person</td>
+      <td>{{tipPerPerson | number: '.2-2'}}</td>
+    </tr>
+    <tr>
+      <td>Total Per Person</td>
+      <td>{{totPerPerson | number: '.2-2'}}</td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">
+        <input type="button" (click)="calcBill()" value="Calc Bill"/>
+      </td>
+    </tr>
+  </table>
+</div>

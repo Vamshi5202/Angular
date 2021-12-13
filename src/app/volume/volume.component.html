@@ -1,0 +1,22 @@
+<div class="col-md-5 mx-auto">
+  <h2>{{voltitle}}</h2>
+  <table class="table table-primary table-striped table-hover">
+    <tr>
+      <td>Height</td>
+      <td><input type="number" [(ngModel)]="height"/> </td>
+    </tr>
+    <tr>
+      <td>Radius</td>
+      <td><input type="number" [(ngModel)]="radius"/> </td>
+    </tr>
+    
+    <tr>
+      <td>Volume</td>
+      <td>{{res}}</td>
+    </tr>
+    <tr>
+      <td><input type="button" (click)="findCone()" value="cone"/></td>
+      <td><input type="button" (click)="findCyl()" value="cylinder" /> </td>
+    </tr>
+  </table>
+</div>
