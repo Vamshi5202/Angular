@@ -1,0 +1,384 @@
+<ion-header class='main-container'>
+  <ion-toolbar>
+    <ion-title [class]="checkDesktop?'top-header':'top-header-mobile'">
+
+   <ion-grid class="ion-no-padding">
+     <ion-row>
+       <ion-col *ngIf='checkDesktop'>
+        <ion-list class='left-right-options'>
+          <div class='ion-header-options'>
+        <h1>Netflix</h1>
+        <p (click)='handleSegment("all")'>Home</p>
+        <p (click)='handleSegment("tvshows")'>TV shows</p>
+        <p (click)='handleSegment("movies")'>Movies</p>
+        <p (click)='handleSegment("popular")'>New&Popular</p>
+        <p (click)='handleSegment("trending")'>Trending</p>
+         </div>
+         <div class='ion-header-options-2'>
+           <ul>
+             <li>
+          
+            <ion-item>
+              <ion-label position='floating' style="color: white;" >Search</ion-label>
+             <ion-input class="input-search" [(ngModel)]='term' (ionChange)='handleSearch()'>
+  
+             </ion-input>
+            </ion-item>
+         
+          </li>
+          <li>
+           
+             <ion-button sloty="icon-only" fill='clear' >
+              <ion-icon name="notifications-outline" style="color: white;"></ion-icon>
+             </ion-button>
+          
+          </li>
+          <li>
+         
+            <ion-button fill='clear' [routerLink]='["/","netflix","signin"]' (click)='handleLogin()'><ion-label style="color: white;" >Signin</ion-label></ion-button>
+          
+          </li>
+          </ul>
+         </div>
+        </ion-list>
+  
+       </ion-col>
+       <ion-col *ngIf='!checkDesktop' style="display: flex;background-color: black;">
+         <div style="margin-top: 12px;">
+         <img style="width: 4rem;" src="../../assets/Netflix_icon.svg.png" alt='netflix-icon'/>
+         </div>
+         <div style="display: flex;align-items: center;">
+          <ion-item>
+           <ion-input class="input-search" [(ngModel)]='term' (ionChange)='handleSearch()' placeholder='Search'>
+
+           </ion-input>
+          </ion-item>
+          <ion-button routerLink='/netflix/signin' fill='clear' (click)='handleLogin()'><ion-label style="color: white;" >Signin</ion-label></ion-button>
+         </div>
+       </ion-col>
+     </ion-row>
+   </ion-grid>
+    </ion-title>
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content class='main-container'>
+  <ion-col *ngIf='!checkDesktop'>
+    <ion-segment scrollable='false' swipe-gesture='true' color='danger'  (ionChange)='handleSegment($event)'>
+      <ion-segment-button value="all">
+        <ion-label style="color: white;" >Home</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="tvshows">
+        <ion-label style="color: white;">TV Shows</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="movies">
+        <ion-label style="color: white;">Movies</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="trending">
+        <ion-label style="color: white;" >Trending</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    
+  </ion-col>
+<ion-grid>
+  <ion-row *ngIf='moviesShow '>
+  
+    <ion-col>
+      <h2 >All Movies</h2>
+      <ion-list class="ion-all-movies">
+       
+       <ul >
+        
+
+        <li *ngFor='let movie of allMovies$ | async | SearchmoviesPipe : term' class="ion-single-card">
+         
+           <!-- <h1>
+             {{movie.title}}
+           </h1>
+          -->
+         <!-- <ion-thumbnail style="min-width: 250px;min-height: 400px;" >
+           
+          </ion-thumbnail> -->
+          <ion-card class="ion-main-subcontainer">
+            <ion-card-header>
+              <ion-card-title style="color: white;">
+                {{movie.title}}
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+          <ion-img  (click)='movieDescription(movie)' class="movie-images" src='https://image.tmdb.org/t/p/w500{{movie.poster_path}}'></ion-img>
+        </ion-card-content>
+          </ion-card>
+          
+        </li>
+      </ul>
+      <h3 style="color: white;margin-left:2rem" *ngIf='obtainedSearchall?.length==0'>No Movies Found!</h3>
+      </ion-list>
+    
+    </ion-col>
+    <ion-col>
+      <h2>Top Movies</h2>
+      <ion-list class="ion-all-movies">
+       
+       <ul>Movies
+
+
+        
+
+        <li *ngFor='let movie of topMovies$ | async | SearchmoviesPipe : term' class="ion-single-card">
+         
+           <!-- <h1>
+             {{movie.title}}
+           </h1>
+          -->
+         <!-- <ion-thumbnail style="min-width: 250px;min-height: 400px;" >
+           
+          </ion-thumbnail> -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title style="color: white;">
+                {{movie.title}}
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+          <ion-img   (click)='movieDescription(movie)' class="movie-images" src='https://image.tmdb.org/t/p/w500{{movie.poster_path}}'></ion-img>
+           </ion-card-content>
+        </ion-card>
+        </li>
+      </ul>
+      <h3  style="color: white;margin-left:2rem" *ngIf='obtainedSearchtop?.length==0' >No Top Movies Found!</h3>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf='trendingShow'>
+    <ion-col>
+      <h2 >Trending</h2>
+      <ion-list class="ion-all-movies">
+       
+       <ul >
+        
+
+        <li *ngFor='let movie of trendingAll$ | async' class="ion-single-card">
+         
+          <ion-card class="ion-main-subcontainer">
+            <ion-card-header>
+              <ion-card-title style="color: white;">
+                {{movie.title?movie.title:movie.name}}
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+          <ion-img  (click)='movieDescription(movie)' class="movie-images" src='https://image.tmdb.org/t/p/w500{{movie?.poster_path}}'></ion-img>
+        </ion-card-content>
+          </ion-card>
+          
+        </li>
+      </ul>
+      <h3 style="color: white;margin-left:2rem" *ngIf='obtainedSearchall?.length==0'>No Movies Found!</h3>
+      </ion-list>
+    
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf='tvShows'>
+    <ion-col>
+      <h2 >Tv Shows</h2>
+      <ion-list class="ion-all-movies">
+       
+       <ul >
+        
+
+        <li *ngFor='let movie of tvshows$ | async' class="ion-single-card">
+         
+          <ion-card class="ion-main-subcontainer">
+            <ion-card-header>
+              <ion-card-title style="color: white;">
+                {{movie.title?movie.title:movie.name}}
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+          <ion-img  (click)='movieDescription(movie)' class="movie-images" src='https://image.tmdb.org/t/p/w500{{movie?.poster_path}}'></ion-img>
+        </ion-card-content>
+          </ion-card>
+          
+        </li>
+      </ul>
+      <h3 style="color: white;margin-left:2rem" *ngIf='obtainedSearchall?.length==0'>No Movies Found!</h3>
+      </ion-list>
+    
+    </ion-col>
+  </ion-row>
+///
+<div *ngIf='(!moviesShow && !trendingShow && !tvShows) || allShow '>
+  <ion-row >
+  
+    <ion-col>
+      <h2 >All Movies</h2>
+      <ion-list class="ion-all-movies">
+       
+       <ul >
+        
+
+        <li *ngFor='let movie of allMovies$ | async | SearchmoviesPipe : term' class="ion-single-card">
+         
+           <!-- <h1>
+             {{movie.title}}
+           </h1>
+          -->
+         <!-- <ion-thumbnail style="min-width: 250px;min-height: 400px;" >
+           
+          </ion-thumbnail> -->
+          <ion-card class="ion-main-subcontainer">
+            <ion-card-header>
+              <ion-card-title style="color: white;">
+                {{movie.title}}
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+          <ion-img  (click)='movieDescription(movie)' class="movie-images" src='https://image.tmdb.org/t/p/w500{{movie.poster_path}}'></ion-img>
+        </ion-card-content>
+          </ion-card>
+          
+        </li>
+      </ul>
+      <h3 style="color: white;margin-left:2rem" *ngIf='obtainedSearchall?.length==0'>No Movies Found!</h3>
+      </ion-list>
+    
+    </ion-col>
+    <ion-col>
+      <h2>Top Movies</h2>
+      <ion-list class="ion-all-movies">
+       
+       <ul>
+        
+
+        <li *ngFor='let movie of topMovies$ | async | SearchmoviesPipe : term' class="ion-single-card">
+         
+           <!-- <h1>
+             {{movie.title}}
+           </h1>
+          -->
+         <!-- <ion-thumbnail style="min-width: 250px;min-height: 400px;" >
+           
+          </ion-thumbnail> -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title style="color: white;">
+                {{movie.title}}
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+          <ion-img   (click)='movieDescription(movie)' class="movie-images" src='https://image.tmdb.org/t/p/w500{{movie.poster_path}}'></ion-img>
+           </ion-card-content>
+        </ion-card>
+        </li>
+      </ul>
+      <h3  style="color: white;margin-left:2rem" *ngIf='obtainedSearchtop?.length==0' >No Top Movies Found!</h3>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+
+  <ion-row >
+    <ion-col>
+      <h2 >Trending</h2>
+      <ion-list class="ion-all-movies">
+       
+       <ul >
+        
+
+        <li *ngFor='let movie of trendingAll$ | async' class="ion-single-card">
+         
+          <ion-card class="ion-main-subcontainer">
+            <ion-card-header>
+              <ion-card-title style="color: white;">
+                {{movie.title?movie.title:movie.name}}
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+          <ion-img  (click)='movieDescription(movie)' class="movie-images" src='https://image.tmdb.org/t/p/w500{{movie?.poster_path}}'></ion-img>
+        </ion-card-content>
+          </ion-card>
+          
+        </li>
+      </ul>
+      <h3 style="color: white;margin-left:2rem" *ngIf='obtainedSearchall?.length==0'>No Movies Found!</h3>
+      </ion-list>
+    
+    </ion-col>
+  </ion-row>
+
+  <ion-row  >
+    <ion-col>
+      <h2 >Tv Shows</h2>
+      <ion-list class="ion-all-movies">
+       
+       <ul >
+        
+
+        <li *ngFor='let movie of tvshows$ | async' class="ion-single-card">
+         
+          <ion-card class="ion-main-subcontainer">
+            <ion-card-header>
+              <ion-card-title style="color: white;">
+                {{movie.title?movie.title:movie.name}}
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+          <ion-img  (click)='movieDescription(movie)' class="movie-images" src='https://image.tmdb.org/t/p/w500{{movie?.poster_path}}'></ion-img>
+        </ion-card-content>
+          </ion-card>
+          
+        </li>
+      </ul>
+      <h3 style="color: white;margin-left:2rem" *ngIf='obtainedSearchall?.length==0'>No Movies Found!</h3>
+      </ion-list>
+    
+    </ion-col>
+  </ion-row>
+</div>
+</ion-grid>
+<ion-footer>
+  <ion-toolbar style="--ion-background-color:grey;">
+    <ion-list>
+      <div  [class.change-flex] = "checkDesktop">
+      <ion-item [lines]="checkDesktop?'none':'full'" *ngFor='let foot of footer' class="ion-text-center">
+        <ion-label style="color: white;">{{foot}}</ion-label>
+      </ion-item>
+    </div>
+      <div class="ion-text-center">
+        <ion-icon class="icon-logo-social ion-padding" name='logo-facebook' ></ion-icon> <ion-icon class="icon-logo-social ion-padding"  name='logo-twitter'></ion-icon>
+      </div>
+    <div class="ion-text-center">
+     <p class="set-footer-text"><ion-icon class="icon-logo-social" name="checkmark-circle-outline"></ion-icon><span>2021 KAI USA LTD.</span></p>
+     <p>PRIVACY + TERMS |</p>
+    </div>
+    </ion-list>
+  </ion-toolbar>
+</ion-footer>
+
+</ion-content>
+<ion-tab-bar slot="bottom" style="--ion-background-color: black;" *ngIf='!checkDesktop'>
+  <ion-tab-button tab="home">
+    <ion-icon name="home-outline"></ion-icon>
+    <ion-label>Home</ion-label>
+    
+  </ion-tab-button>
+
+  <ion-tab-button tab="comingsoon">
+    <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+    <ion-label>Coming Soon</ion-label>
+    <ion-badge>6</ion-badge>
+  </ion-tab-button>
+
+  <ion-tab-button tab="mylist">
+    <ion-icon name="arrow-down-circle-outline"></ion-icon>
+    <ion-label>Downloads</ion-label>
+  </ion-tab-button>
+</ion-tab-bar>
+
+
+
+
+ 
+

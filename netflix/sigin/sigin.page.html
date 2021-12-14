@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- <ion-buttons slot="start">
+      <ion-back-button text="" icon="add"></ion-back-button>
+    </ion-buttons> -->
+    <ion-title style="background-color: black;" >
+      <div style="display: flex;align-items: center;">
+      <ion-icon style="font-size: larger; color: white;" name="arrow-back-outline" routerLink='/netflix'></ion-icon><ion-img style="height: 8rem;width: fit-content;" src='../../../assets/Netflix-Logo.wine.svg' alt="netflix-svg"></ion-img>
+    </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-auth-content">
+<ion-grid>
+  <form [formGroup]='signupInfo'>
+  <ion-row>
+    <ion-col size-md='3' offset-md='4' class="col-signin">
+             <h1>Sign In</h1>
+           <ion-item class="input-auth-fields border-sep">
+             <ion-label position='floating' >
+               Email or phone number
+             </ion-label>
+             <ion-input
+              required 
+              autocomplete='true'
+              name='email'
+              formControlName='email'
+              autocorrect='true'
+              type='text'
+              >
+             
+             </ion-input>
+           </ion-item>
+           
+              <ion-label style="color: red;" *ngIf="!signupInfo.get('email').valid  && signupInfo.get('email').touched" class="input-auth-fields">Please enter email or phone number</ion-label>
+          
+           <ion-item class="input-auth-fields border-sep">
+            <ion-label position='floating'>
+              Password
+            </ion-label>
+            <ion-input
+             type='password'
+             required
+             formControlName="password" 
+             minlength='6'
+             name='password'
+           
+             >
+               
+            </ion-input>
+          </ion-item >
+          
+            <ion-label style="color: red;" *ngIf="!signupInfo.get('password').valid  && signupInfo.get('password').touched && signupInfo.get('password').value?.length<6" class="input-auth-fields">Password length should greater than 6 characters</ion-label>
+         
+      
+          
+        <ion-button (click)='handleSubmit()' [disabled]='!signupInfo.valid' expand='full' fill='clear' style="border: 2px solid white;border-radius: 4px;margin-top: 14px;font-size: large;
+        height: 3rem;text-transform: none;">
+          <span style="color: white;">Sign In</span>
+        </ion-button>
+        <ion-item class="ion-text-center input-auth-fields" lines='none'>
+          <ion-label>Need help?</ion-label>
+        </ion-item>
+        <ion-item class="ion-text-center input-auth-fields" lines='none'>
+          <ion-label >New to Netflix?Sign up now.</ion-label>
+        </ion-item>
+        <ion-item class="ion-text-center input-auth-fields" style="display: flex;flex-wrap: wrap;" lines='none'>
+          <p class="ion-text-center" style="width: 100%;">
+            Sign in is protected by Google reCAPTACHA to ensure you're not a bot.<span style='color: blue;'>Learn more</span>
+          </p>
+        </ion-item>
+    </ion-col>
+  </ion-row>
+</form>
+</ion-grid>
+</ion-content>
